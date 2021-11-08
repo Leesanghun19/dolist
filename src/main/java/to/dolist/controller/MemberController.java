@@ -1,10 +1,11 @@
 package to.dolist.controller;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.sun.xml.bind.v2.TODO;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import to.dolist.Service.MemberService;
@@ -38,7 +39,7 @@ public class MemberController {
      회원등록
      */
     @PostMapping("/members")
-    public CreateMemberResponse saveMember(@RequestBody @Valid CreateMemberRequest request){
+    public CreateMemberResponse saveMember(@RequestBody @Valid CreateMemberRequest request) {
         Member member = new Member();
         member.setName(request.getName());
         member.setAge(request.age);
@@ -135,7 +136,7 @@ public class MemberController {
         private String email;
         private LocalDateTime createAt;
         private LocalDateTime updateAt;
-        private List<ToDo> todo;
+        private List<TodoListDto> todolist;
 
         public MemberToDo(Member member){
             id=member.getId();
@@ -144,8 +145,26 @@ public class MemberController {
             createAt=member.getCreateAt();
             updateAt=member.getUpdatedAt();
             name=member.getName();
-            todo=member.getTodo();
+            todolist=member.getTodo().stream()
+                    .map(todo->new TodoListDto(todo))
+                    .collect(Collectors.toList());
         }
 
     }
+    @Getter
+    static class TodoListDto{
+        private Long todoId;
+        private String content;
+        private String isCompleted;
+        private LocalDateTime createAT;
+        private LocalDateTime updateAt;
+        public TodoListDto(ToDo todo){
+            content=todo.getContent();
+            todoId=todo.getId();
+            isCompleted=todo.getIsCompleted();
+            createAT=todo.getCreateAt();
+            updateAt=todo.getUpdatedAt();
+        }
+    }
+
 }
