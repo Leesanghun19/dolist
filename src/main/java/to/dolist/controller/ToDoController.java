@@ -47,7 +47,7 @@ public class ToDoController {
         toDo.setContent(request.content);
         toDo.setCreateAt(LocalDateTime.now());
         toDo.setMember(memberService.findOne(mid));
-        toDo.setMId(memberService.findOne(mid).getId());
+
         toDo.setIsCompleted("not");
         Long id= toDoService.join(toDo);
         return  new CreateToDoResponse(id);
@@ -57,13 +57,13 @@ public class ToDoController {
      TODO수정
      */
     @PatchMapping("/todos/{todoid}")
-    public UpateToDoResponse upateToDoResponse(
+    public UpdateToDoResponse upateToDoResponse(
             @PathVariable("todoid") Long id,
             @RequestBody @Valid UpdateToDoRequest request
     ){
         toDoService.update(id,request.getIsCompleted());
         ToDo findtodo=toDoService.findOne(id);
-        return new UpateToDoResponse(findtodo.getId(),findtodo.getIsCompleted());
+        return new UpdateToDoResponse(findtodo.getId(),findtodo.getIsCompleted());
     }
     /**
      TODO삭제
@@ -107,7 +107,7 @@ public class ToDoController {
     }
     @Data
     @AllArgsConstructor
-    static class UpateToDoResponse {
+    static class UpdateToDoResponse {
         private Long id;
         private String isCompleted;
     }
@@ -151,7 +151,7 @@ public class ToDoController {
             content=toDo.getContent();
             createAt =toDo.getCreateAt();
             isCompleted =toDo.getIsCompleted();
-            mid =toDo.getMId();
+            mid =toDo.getMember().getId();
 
         }
     }

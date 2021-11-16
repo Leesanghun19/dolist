@@ -29,7 +29,7 @@ public class ToDo {
     private String isCompleted;
     private LocalDateTime createAt;
     private LocalDateTime updatedAt;
-    private Long mId;
+
     //연관관계 메서드//
     public void setMember(Member member){
         this.member=member;
@@ -43,7 +43,7 @@ public class ToDo {
         todo.setContent(content);
         todo.setIsCompleted("not");
         todo.setCreateAt(LocalDateTime.now());
-        todo.setMId(member.getId());
+
         return todo;
 
 
