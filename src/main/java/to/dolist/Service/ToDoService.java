@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
-@Transactional
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class ToDoService {
     private final ToDoRepository toDoRepository;
@@ -36,4 +36,5 @@ public class ToDoService {
     //조회
     public ToDo findOne(Long id){return toDoRepository.findOne(id);}
     public List<ToDo> findAllWIthMemberToDo() {return toDoRepository.findAllWIthMemberToDo();}
+    public ToDo findId(Long id){return toDoRepository.findIdWithMember(id);}
 }

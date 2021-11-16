@@ -11,11 +11,12 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
-@Transactional
+
 @RequiredArgsConstructor
 public class MemberService {
     private final MemberRepository memberRepository;
     //회원가입
+    @Transactional
     public Long join(Member member){
         validateDuplicateMember(member);//중복확인
         memberRepository.save(member);
@@ -31,7 +32,7 @@ public class MemberService {
     //회원조회
     public List<Member> findMembers(){return memberRepository.findAll();}
     public Member findOne(Long memberId) {return memberRepository.findOne(memberId);}
-    public List<Member> findById(Long id){return  memberRepository.findById(id);}
+
     //변경
     @Transactional
     public void update(Long id,String name,Integer age){

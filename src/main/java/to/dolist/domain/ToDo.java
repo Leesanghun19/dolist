@@ -1,19 +1,17 @@
 package to.dolist.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.transaction.annotation.Transactional;
-
 import javax.persistence.*;
 import java.time.LocalDateTime;
 @Entity
 @Table(name="todo")
 @Getter
 @Setter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ToDo {
     @Id
     @GeneratedValue

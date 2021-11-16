@@ -28,8 +28,8 @@ public class MemberController {
     @GetMapping("/members")
     public Result memberfindall(){
         List<Member> findMembers=memberService.findMembers();
-        List<MemberDto>collect = findMembers.stream()
-                .map(m->new MemberDto(m.getName(),m.getId()))
+        List<MemberToDo>collect = findMembers.stream()
+                .map(m->new MemberToDo(m))
                 .collect(Collectors.toList());
         return new Result(collect);
     }
@@ -63,16 +63,13 @@ public class MemberController {
      회원단건조회
      */
     @GetMapping("/members/{id}")
-    public Result findoneMember(
+    public MemberToDo findoneMember(
             @PathVariable("id") Long id
 
     ){
 
-        List<Member> findMembers=memberService.findById(id);
-        List<MemberToDo>collect = findMembers.stream()
-                .map(m->new MemberToDo(m))
-                .collect(Collectors.toList());
-        return new Result(collect);
+        Member member=memberService.findOne(id);
+        return new MemberToDo(member);
 
     }
 
@@ -118,12 +115,6 @@ public class MemberController {
         private String name;
 
         private Integer age;
-    }
-    @Data
-    @AllArgsConstructor
-    private class MemberDto{
-        private String name;
-        private Long id;
     }
     @Data
     @AllArgsConstructor

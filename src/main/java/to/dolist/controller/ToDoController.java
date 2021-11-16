@@ -35,7 +35,7 @@ public class ToDoController {
             @PathVariable("todoid") Long id
 
     ){
-        ToDo findtodo=toDoService.findOne(id);
+        ToDo findtodo=toDoService.findId(id);
         return new GetToDoResponse(findtodo);
     }
     /**
@@ -43,12 +43,7 @@ public class ToDoController {
      */
     @PostMapping("/members/{mid}/todos")
     public CreateToDoResponse saveToDo(@PathVariable("mid") Long mid,@RequestBody @Valid CreateToDoRequest request){
-        ToDo toDo= new ToDo();
-        toDo.setContent(request.content);
-        toDo.setCreateAt(LocalDateTime.now());
-        toDo.setMember(memberService.findOne(mid));
-
-        toDo.setIsCompleted("not");
+        ToDo toDo= ToDo.createToDo(memberService.findOne(mid),request.content);
         Long id= toDoService.join(toDo);
         return  new CreateToDoResponse(id);
 

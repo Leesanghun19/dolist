@@ -26,6 +26,15 @@ public class ToDoRepository {
                         ,ToDo.class
         ).getResultList();
     }
+    public ToDo findIdWithMember(Long id){
+        return em.createQuery(
+                "select o from ToDo o" +
+                        " join fetch o.member m"+
+                        " where o.id = :id"
+                ,ToDo.class
+        ).setParameter("id",id)
+                .getSingleResult();
+    }
     //삭제
     public void deleteToDo(Long todoId){
             em.remove(findOne(todoId));
