@@ -11,7 +11,8 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class ExistEmail {
     @ExceptionHandler(IllegalStateException.class)
-    public ResponseEntity<String> ex(IllegalStateException e){
-        return new ResponseEntity<>("이미존제하는 email 입니다", HttpStatus.BAD_REQUEST);
+    public ResponseEntity<ErrorResult> ex(IllegalStateException e){
+        ErrorResult errorResult = new ErrorResult("EXIST-EMAIL",e.getMessage());
+        return new ResponseEntity(errorResult,HttpStatus.BAD_REQUEST);
     }
 }
