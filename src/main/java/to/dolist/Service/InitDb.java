@@ -33,7 +33,7 @@ public class InitDb {
             ToDo toDo2=ToDo.createToDo(member,"코딩2");
             em.persist(toDo);
             em.persist(toDo2);
-            em.flush();
+
 
         }
         public void dbInit2(){
@@ -43,7 +43,7 @@ public class InitDb {
             ToDo toDo2=ToDo.createToDo(member,"수학");
             em.persist(toDo);
             em.persist(toDo2);
-            em.flush();
+
 
         }
         private Member createMember(String name,String email,Integer age) {
